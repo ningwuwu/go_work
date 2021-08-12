@@ -96,14 +96,14 @@ func main() {
 	//arr := []int {0, 1, 2, 3, 4, 5, 6}
 	//res := filter(arr, isEven)
 	//fmt.Println(res)
-	test3()
+	//test3()
 	// 比如说这里，res1得到的是匿名函数的地址，
 	// 和counter这个函数没有任何关系，
 	// 他只是一个代理作用，帮你得到这个匿名函数
 	// 所以就算再counter中修改变量的值也不会影响匿名函数中值的改变
-	res1 := counter()
-	fmt.Println(res1())
-	fmt.Println(res1())
+	//res1 := counter()
+	//fmt.Println(res1())
+	//fmt.Println(res1())
 	// 这里如果重新引用了这个匿名函数，
 	// 那么他和之前的匿名函数使用完全没有关联
 	// 所以res2虽然和res1保存都是这个匿名函数的地址
@@ -112,11 +112,14 @@ func main() {
 	// 注意：使用匿名函数的使用一定要加括号，
 	// 只有添加括号才认为你是通过这个函数地址去执行这个函数
 	// 变量中存的是返回值，否则存的就是函数的地址
-	res2 := counter()
-	fmt.Println(res2())
-	fmt.Println(res1())
-	fmt.Printf("%T\n", res1)
-	fmt.Printf("%T", res1())
+	//res2 := counter()
+	//fmt.Println(res2())
+	//fmt.Println(res1())
+	//fmt.Printf("%T\n", res1)
+	//fmt.Printf("%T", res1())
+	auto_exec()
+	fmt.Println()
+	ptr()
 }
 func isEven(val int) bool {
 	if val % 2 == 0 {
@@ -155,4 +158,30 @@ func counter() (func() int) {
 		i++
 		return i
 	}
+}
+// 可变参数
+func auto_exec() {
+	scores := []float64 {99, 85, 77.5}
+	sums, avg, count := average_sums(scores ...)
+	fmt.Println(count)
+	fmt.Println(avg)
+	fmt.Printf("%.2f", sums)
+
+}
+func average_sums(num ... float64) (sums, avg float64, count int64) {
+	for _, val := range num {
+		count++
+		sums += val
+	}
+	avg = sums / float64(count)
+	return sums, avg, count
+}
+// 指针
+func ptr() {
+	var ip *int64 = nil
+	var a int64 = 3
+	ip = &a
+	fmt.Println(ip)
+	fmt.Println(&ip)
+	fmt.Println(*ip)
 }
